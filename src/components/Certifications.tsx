@@ -1,56 +1,86 @@
-import { useReveal } from '@/hooks/useReveal';
-import { certifications } from '@/data/portfolio';
-import { ExternalLink } from 'lucide-react';
-import { DecorativeCurve } from './Decorations';
+﻿import { useReveal } from '@/hooks/useReveal';
+import { certificationsData } from '@/data/portfolio';
+import { Award, ExternalLink, ShieldCheck } from 'lucide-react';
 
 export default function Certifications() {
   const { ref, visible } = useReveal();
 
+  const getProviderBadge = (provider: string) => {
+    switch (provider) {
+      case 'IBM':
+        return 'bg-blue-50 text-blue-800 border-blue-200';
+      case 'Deloitte':
+        return 'bg-emerald-50 text-emerald-800 border-emerald-200';
+      case 'Cisco':
+        return 'bg-sky-50 text-sky-800 border-sky-200';
+      default:
+        return 'bg-slate-50 text-slate-800 border-slate-200';
+    }
+  };
+
   return (
-    <section id="certifications" className="py-24 lg:py-32 bg-blush/30 relative overflow-hidden">
-      <div className="absolute top-10 left-5 opacity-20">
-        <DecorativeCurve />
-      </div>
+    <section id="certifications" className="py-20 lg:py-28 bg-slate-50/70 border-t border-slate-200/70 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div ref={ref} className={`reveal ${visible ? 'visible' : ''}`}>
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="eyebrow-badge mb-3">
+              <Award size={13} className="text-brand-600" />
+              06 — Verified Credentials
+            </div>
+            <h2 className="section-title">
+              Certifications
+            </h2>
+            <p className="section-subtitle mx-auto">
+              Formal industry certifications in Python programming, exploratory data analysis, business intelligence, and foundational data science.
+            </p>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="eyebrow mb-4">06 — Certifications</p>
-          <h2 className="section-title">Certifications & achievements</h2>
-        </div>
-
-        <div
-          ref={ref}
-          className={`reveal ${visible ? 'visible' : ''} grid sm:grid-cols-2 lg:grid-cols-3 gap-6`}
-        >
-          {certifications.map((cert, idx) => {
-            const Icon = cert.icon;
-            return (
-              <div
-                key={cert.title}
-                className="card card-hover p-6 border border-plum-100/40"
-                style={{ transitionDelay: `${idx * 80}ms` }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-blush flex items-center justify-center">
-                    <Icon size={24} className="text-plum" />
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-plum-50 text-plum text-xs font-semibold border border-plum-100">
-                    {cert.provider}
-                  </span>
-                </div>
-                <h3 className="font-serif text-lg font-semibold text-plum mb-4">
-                  {cert.title}
-                </h3>
-                <a
-                  href={cert.link}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-plum hover:text-rose transition-colors group"
+          {/* 5 Cards Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {certificationsData.map((cert) => {
+              return (
+                <div
+                  key={cert.id}
+                  className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-card hover:shadow-card-hover hover:border-brand-300 transition-all duration-300 flex flex-col justify-between group"
                 >
-                  View Certificate
-                  <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-            );
-          })}
+                  <div>
+                    {/* Top Row: Provider & Shield */}
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <span className={`px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider border ${getProviderBadge(cert.provider)}`}>
+                        {cert.provider}
+                      </span>
+                      <ShieldCheck size={18} className="text-emerald-500" />
+                    </div>
+
+                    {/* Certificate Title */}
+                    <h3 className="text-base sm:text-lg font-bold text-navy-900 group-hover:text-brand-600 transition-colors mb-2">
+                      {cert.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 mb-6">
+                      Issued by {cert.provider}
+                    </p>
+                  </div>
+
+                  {/* Action Link with Placeholder */}
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-600 hover:text-brand-800 transition-colors group/link"
+                    >
+                      <span>View Certificate</span>
+                      <ExternalLink size={13} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                    </a>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      Verified
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

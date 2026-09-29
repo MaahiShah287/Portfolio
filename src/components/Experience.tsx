@@ -1,60 +1,103 @@
-import { useReveal } from '@/hooks/useReveal';
-import { ExternalLink } from 'lucide-react';
-import { DecorativeCurve } from './Decorations';
+﻿import { useReveal } from '@/hooks/useReveal';
+import { experienceData } from '@/data/portfolio';
+import { Briefcase, Award, ExternalLink, CheckCircle2, Star } from 'lucide-react';
 
 export default function Experience() {
   const { ref, visible } = useReveal();
 
   return (
-    <section id="experience" className="py-24 lg:py-32 bg-blush/30 relative overflow-hidden">
-      <div className="absolute top-10 right-5 opacity-20">
-        <DecorativeCurve />
-      </div>
+    <section id="experience" className="py-20 lg:py-28 bg-white border-t border-slate-200/70 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div ref={ref} className={`reveal ${visible ? 'visible' : ''}`}>
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="eyebrow-badge mb-3">
+              <Briefcase size={13} className="text-brand-600" />
+              03 — Professional Experience
+            </div>
+            <h2 className="section-title">
+              Hands-on internship & practical application.
+            </h2>
+            <p className="section-subtitle mx-auto">
+              Real-world industry exposure solving analytical problems, delivering dashboards, and deriving business insights.
+            </p>
+          </div>
 
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="eyebrow mb-4">03 — Experience</p>
-          <h2 className="section-title">Where I've applied my skills</h2>
-        </div>
+          {/* Timeline Experience Card */}
+          <div className="max-w-4xl mx-auto">
+            <div className="relative pl-6 sm:pl-10 border-l-2 border-brand-200">
+              {/* Timeline Indicator Dot */}
+              <div className="absolute -left-[9px] top-6 w-4 h-4 rounded-full bg-brand-600 border-4 border-white shadow-sm ring-2 ring-brand-100" />
 
-        <div
-          ref={ref}
-          className={`reveal ${visible ? 'visible' : ''} relative`}
-        >
-          {/* Timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-plum-100 -translate-x-1/2" />
-
-          {/* Timeline item */}
-          <div className="relative flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-8">
-            {/* Milestone dot */}
-            <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-rose border-4 border-ivory shadow-md z-10" />
-
-            {/* Card */}
-            <div className="md:w-1/2 md:ml-auto pl-12 md:pl-12">
-              <div className="card card-hover p-6 bg-white shadow-sm">
-                <div className="flex items-start justify-between mb-3">
+              {/* Experience Card */}
+              <div className="bg-slate-50/80 rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-card hover:shadow-card-hover hover:border-brand-300 transition-all duration-300">
+                {/* Header Row */}
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-5 border-b border-slate-200/70 mb-6">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-plum mb-1">
-                      Data Analytics Intern
-                    </h3>
-                    <p className="text-rose font-medium text-sm">Elevate Labs</p>
+                    <div className="flex items-center gap-3 flex-wrap mb-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-navy-900">
+                        {experienceData.role}
+                      </h3>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <CheckCircle2 size={13} />
+                        {experienceData.status}
+                      </span>
+                    </div>
+                    <p className="text-base font-semibold text-brand-700">
+                      {experienceData.company}
+                    </p>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold border border-green-200">
-                    COMPLETED
-                  </span>
+
+                  {/* Best Performer Recognition Tag */}
+                  {experienceData.isBestPerformer && (
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200/90 shadow-sm shrink-0">
+                      <Star size={15} className="text-amber-500 fill-amber-400" />
+                      <span className="text-xs font-bold uppercase tracking-wider">
+                        Best Performer Awarded
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm text-mauve leading-relaxed mb-4">
-                  Completed a comprehensive data analytics internship focused on real-world data
-                  analysis, building practical analytics projects, and developing hands-on skills
-                  in data cleaning, exploration, visualization, and reporting.
-                </p>
-                <a
-                  href="#certificate-link"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-plum hover:text-rose transition-colors group"
-                >
-                  View Certificate
-                  <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
+
+                {/* Highlights List */}
+                <div className="space-y-3 mb-6">
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Key Contributions & Responsibilities
+                  </p>
+                  <ul className="grid gap-2.5">
+                    {experienceData.highlights.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-600 mt-2 shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Technology Badges & Certificate Action */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-5 border-t border-slate-200/70">
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Python', 'SQL', 'Power BI', 'EDA', 'Data Visualization', 'Excel'].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-white text-slate-700 border border-slate-200 shadow-2xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <a
+                    href={experienceData.certificateLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100/90 border border-brand-200/80 transition-all duration-200 hover:-translate-y-0.5"
+                  >
+                    <Award size={15} />
+                    <span>View Certificate</span>
+                    <ExternalLink size={13} className="text-brand-500" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>

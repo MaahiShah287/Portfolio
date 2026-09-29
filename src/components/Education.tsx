@@ -1,47 +1,83 @@
-import { useReveal } from '@/hooks/useReveal';
-import { GraduationCap } from 'lucide-react';
-import { DecorativeDots } from './Decorations';
+﻿import { useReveal } from '@/hooks/useReveal';
+import { educationData } from '@/data/portfolio';
+import { GraduationCap, Award, BookOpen } from 'lucide-react';
 
 export default function Education() {
   const { ref, visible } = useReveal();
 
   return (
-    <section id="education" className="py-24 lg:py-32 bg-ivory relative overflow-hidden">
-      <div className="absolute bottom-10 right-10 opacity-15">
-        <DecorativeDots className="w-28 h-28" />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="eyebrow mb-4">07 — Education</p>
-          <h2 className="section-title">Academic foundation</h2>
-        </div>
-
+    <section id="education" className="py-20 lg:py-28 bg-white border-t border-slate-200/70 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div ref={ref} className={`reveal ${visible ? 'visible' : ''}`}>
-          <div className="card card-hover p-8 border border-plum-100/40 relative overflow-hidden">
-            {/* Timeline accent */}
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-plum to-rose" />
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="eyebrow-badge mb-3">
+              <GraduationCap size={13} className="text-brand-600" />
+              07 — Education
+            </div>
+            <h2 className="section-title">
+              Academic Foundation
+            </h2>
+            <p className="section-subtitle mx-auto">
+              Rigorous undergraduate engineering curriculum with an analytical focus on algorithms, databases, and structured problem solving.
+            </p>
+          </div>
 
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-blush flex items-center justify-center flex-shrink-0">
-                <GraduationCap size={28} className="text-plum" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-xl font-bold text-plum mb-1">
-                  B.Tech — Computer Engineering
-                </h3>
-                <p className="text-mauve text-sm mb-3">
-                  Shah & Anchor Kutchhi Engineering College
-                </p>
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="px-3 py-1 rounded-full bg-rose/10 text-rose text-xs font-semibold border border-rose/20">
-                    3rd Year
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-mauve">
-                      CGPA
-                    </span>
-                    <span className="font-serif text-2xl font-bold text-plum">9.2</span>
+          {/* Education Card */}
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-slate-50/80 rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-card hover:shadow-card-hover transition-all duration-300">
+              <div className="grid md:grid-cols-12 gap-8 items-center">
+                {/* Degree & College Info (8 cols) */}
+                <div className="md:col-span-8 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-brand-50 border border-brand-200/70 flex items-center justify-center text-brand-600 shrink-0">
+                      <GraduationCap size={24} />
+                    </div>
+                    <div>
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-brand-50 text-brand-700 border border-brand-200/80 inline-block mb-1">
+                        {educationData.status} Student
+                      </span>
+                      <h3 className="text-xl sm:text-2xl font-bold text-navy-900">
+                        {educationData.degree}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-base font-semibold text-slate-700">
+                    {educationData.institution}
+                  </p>
+
+                  <div className="pt-2">
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+                      <BookOpen size={13} className="text-brand-600" />
+                      Relevant Engineering Coursework
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {educationData.coursework.map((course) => (
+                        <span
+                          key={course}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-700 border border-slate-200 shadow-2xs"
+                        >
+                          {course}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* CGPA Feature Highlight Box (4 cols) */}
+                <div className="md:col-span-4 flex flex-col items-center justify-center p-6 rounded-2xl bg-white border border-slate-200 shadow-sm text-center">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
+                    <Award size={20} />
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
+                    Cumulative GPA
+                  </div>
+                  <div className="text-4xl sm:text-5xl font-extrabold text-navy-900 tracking-tight">
+                    {educationData.cgpa}
+                  </div>
+                  <div className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-2 border border-emerald-200">
+                    Scale: 10.0
                   </div>
                 </div>
               </div>
